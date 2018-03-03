@@ -1,76 +1,80 @@
 package com.example.igor.profile;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
-import android.hardware.*;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements SensorEventListener {
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-    private SensorManager sensorManager;
-    private TextView count;
-    private Button button;
-    boolean activityRunning;
+import ru.underground.test42.InnerThings.Ingredient;
+import ru.underground.test42.InnerThings.IngridientManager;
+import ru.underground.test42.InnerThings.MainSystem;
+import ru.underground.test42.InnerThings.Recipe;
+import ru.underground.test42.Lists.RecipesAdapter;
+
+import static ru.underground.test42.R.id.recipeList;
+
+public class MainActivity extends AppCompatActivity {
+
+    ListView listView;
+    AdapterView.OnItemClickListener listener;
+    Activity activity=this;
+    SharedPreferences preferences;
+    static ArrayList<String> dis;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        //Инициализация системы
+        MainSystem.Initialize();
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        count = (TextView) findViewById(R.id.count);
-
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        MainSystem.Initialize();
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        setContentView(R.layout.activity_ingredients_dislike);
+        listView=(ListView)findViewById(R.id.menuList);
+        final LinearLayout frameView=(LinearLayout)findViewById(R.id.frameView);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1);
+        listView.setAdapter(adapter);
+        adapter.addAll("Главная","Профиль","История","Любимые блюда","Нелюбимые ингридиенты");
+        adapter.notifyDataSetChanged();
+        listener= new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Calendar.class);
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==4){
+                    Toast.makeText(getApplicationContext(),"Выберите нелюбимые ингредиенты, чтобы исключить блюда с ними из поиска",Toast.LENGTH_LONG).show();
+                    ListView mainList=(ListView)findViewById(recipeList);
+                    final IngredientAdapter recipesAdapter=new IngredientAdapter(activity,new ArrayList<Ingredient>());
+                    dis = new ArrayList<>();
+                    dis.addAll(preferences.getStringSet("dislikes",new HashSet<String>()));
+                    mainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Log.d("list","click");
+
+                        }
+                    });
+                    mainList.setAdapter(recipesAdapter);
+                    recipesAdapter.add(IngridientManager.getIngredient(0), Arrays.asList(dis.toArray()).contains(IngridientManager.getIngredient(0).getName()));
+                    recipesAdapter.add(IngridientManager.getIngredient(1), Arrays.asList(dis.toArray()).contains(IngridientManager.getIngredient(1).getName()));
+                    recipesAdapter.add(IngridientManager.getIngredient(2), Arrays.asList(dis.toArray()).contains(IngridientManager.getIngredient(2).getName()));
+                    recipesAdapter.notifyDataSetChanged();
+
+                }
             }
-        });
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        activityRunning = true;
-        Sensor countSensor = sensorManager
-                .getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        if (countSensor != null) {
-            sensorManager.registerListener(this, countSensor,
-                    SensorManager.SENSOR_DELAY_UI);
-        } else {
-            Toast.makeText(this, "Count sensor not available!",
-                    Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        activityRunning = false;
-        // if you unregister the last listener, the hardware will stop detecting
-        // step events
-        // sensorManager.unregisterListener(this);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (activityRunning) {
-            count.setText(String.valueOf(event.values[0]));
-        }
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        };
+        listView.setOnItemClickListener(listener);
     }
 }
