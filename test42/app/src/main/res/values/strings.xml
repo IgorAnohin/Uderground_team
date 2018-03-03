@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Test42</string>
+    <string name="search_button">Найти</string>
+    <string name="search_hint">Введите часть названия</string>
+    <string name="protein">Белки</string>
+    <string name="fats">Жиры</string>
+    <string name="carbons">Углеводы</string>
+    <string name="calories">Калории</string>
+    <string name="ingredients">Ингридиенты</string>
+    <string name="button_start">Начнём!</string>
+    <string name="tools">Посуда и техника</string>
+    <string name="info_main">Информация</string>
+</resources>

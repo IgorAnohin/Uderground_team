@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start"
+        >
+<LinearLayout
+    android:id="@+id/frameView"
+   android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+</LinearLayout>
+    </FrameLayout>
+
+
+
+    <ListView
+        android:id="@+id/menuList"
+        android:background="@android:color/background_light"
+        android:layout_gravity="start"
+        android:layout_width="240dp"
+        android:layout_height="match_parent">
+
+    </ListView>
+</android.support.v4.widget.DrawerLayout>
