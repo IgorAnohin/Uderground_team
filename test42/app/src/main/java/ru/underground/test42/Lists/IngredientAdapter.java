@@ -49,10 +49,8 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
                 dis.add(getItem(i).getName());
             }
         }
-
         return dis;
     }
-
 
     class ViewHolder {
         ImageView ingredientDrawable;
@@ -92,8 +90,6 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
             @Override
             public void onClick(View v) {
                 ingredient.isUnLikeable=!ingredient.isUnLikeable;
-                Log.d("aaa","a"+ Arrays.toString(getDislikes().toArray()));
-                preferences.edit().putStringSet("dislikes",getDislikes()).apply();
                 if (ingredient.isUnLikeable) {
                     holder.checkBox.setChecked(true);
                 } else {

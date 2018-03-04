@@ -73,4 +73,16 @@ public class RecipeList {
         }
         return jArray;
     }
+
+    public Recipe find(int id)
+    {
+        int i = 0;
+        while(i<m_recipes.size())
+        {
+            if(m_recipes.get(i).getId()==id)
+                return m_recipes.get(i);
+            i++;
+        }
+        return null;
+    }
 }

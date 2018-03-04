@@ -22,9 +22,6 @@
     >
 </LinearLayout>
     </FrameLayout>
-
-
-
     <ListView
         android:id="@+id/menuList"
         android:background="@android:color/background_light"

@@ -195,6 +195,11 @@ public class Recipe implements Searchable{
         return m_demands;
     }
 
+    public float getKal()
+    {
+        return m_demands.getProtein()*4+m_demands.getCarbonyd()*9+m_demands.getFats()*4;
+    }
+
     public JsonObject save() {
 
         try{
@@ -330,5 +335,6 @@ public class Recipe implements Searchable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

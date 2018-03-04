@@ -11,29 +11,23 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ru.underground.test42.InnerThings.History;
+import ru.underground.test42.InnerThings.MainSystem;
 import ru.underground.test42.R;
 
 public class StepCounter extends Activity implements SensorEventListener {
 
     private SensorManager sensorManager;
     private TextView count;
-    private Button button;
+    private TextView kalor;
     boolean activityRunning;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_stepper);
-        //count = (TextView) findViewById(R.id.count);
-
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StepCounter.this, Calendar.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_ingredients_dislike);
+        count = (TextView) findViewById(R.id.count);
+        kalor = (TextView) findViewById(R.id.eater);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
     }
@@ -67,6 +61,7 @@ public class StepCounter extends Activity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         if (activityRunning) {
             count.setText(String.valueOf(event.values[0]));
+            kalor.setText((int) MainSystem.getDayKal());
         }
 
     }

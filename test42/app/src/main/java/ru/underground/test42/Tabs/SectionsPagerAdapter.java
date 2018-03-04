@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import java.io.File;
 import java.util.ArrayList;
 
+import ru.underground.test42.InnerThings.Recipe;
 import ru.underground.test42.InnerThings.Step;
 
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
@@ -40,9 +41,10 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         return tabs.get(position).getTitle();
     }
 
-    public void addTab(Step step) {
-        final TabFragment tabFragment=new TabFragment(step);
+    public void addTab(Step step, Recipe recipe) {
+        final TabFragment tabFragment=new TabFragment(step,tabs.size()+1,recipe.getSteps().size());
         tabs.add(new Tab("", tabFragment));
+
         notifyDataSetChanged();
         //viewPager.addOnPageChangeListener(ExplorerActivity.listener);
     }

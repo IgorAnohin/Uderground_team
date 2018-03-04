@@ -246,7 +246,7 @@
                 android:id="@+id/calendarButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_start"/>
+                android:text="Приготовить позже"/>
         </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 

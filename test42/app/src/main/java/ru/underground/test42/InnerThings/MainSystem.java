@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 
+
 import com.google.gson.*;
 
 import org.json.JSONObject;
@@ -17,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -37,6 +40,7 @@ public class MainSystem {
         m_recipes.createTest();
         save(); */
         m_activity = activity;
+
         loadAssets();
         History.Initialize();
 //      DBConnect.init();
@@ -134,5 +138,18 @@ public class MainSystem {
 
     public static RecipeList getRecipeList() {
         return m_recipes;
+    }
+
+    public static float getDayKal()
+    {
+        ArrayList<History.HistoryUnit> m_historyUnit = History.getHistory();
+        float kal = 0;
+        for(int i = 0;i<m_historyUnit.size();i++)
+        {
+            Timestamp today = new Timestamp(System.currentTimeMillis());
+            if(m_historyUnit.get(i).time.getDay() == today.getDay())
+                kal+=m_recipes.find(m_historyUnit.get(i).recipeID).getKal();
+        }
+        return kal;
     }
 }

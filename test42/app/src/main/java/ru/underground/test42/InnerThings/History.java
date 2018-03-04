@@ -10,13 +10,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class History {
-    static protected class HistoryUnit
+    static public class HistoryUnit
     {
         public Timestamp time;
         public int recipeID;
     }
 
-    static protected ArrayList<HistoryUnit> m_history;
+    static private ArrayList<HistoryUnit> m_history;
 
 
     public static void Initialize(){
@@ -28,10 +28,12 @@ public class History {
         HistoryUnit historyUnit = new HistoryUnit();
         historyUnit.recipeID = id;
         historyUnit.time = new Timestamp(System.currentTimeMillis());
-        m_history.add(historyUnit);
+        m_history.add(0,historyUnit);
+        if(m_history.size()>5)
+            m_history.remove(5);
     }
 
-    public ArrayList<HistoryUnit> getHistory()
+    public static ArrayList<HistoryUnit> getHistory()
     {
         return m_history;
     }

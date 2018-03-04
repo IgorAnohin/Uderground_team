@@ -8,43 +8,73 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="ru.underground.test42.CookingActivity">
-
     <TextView
-        android:id="@+id/timer"
-        android:layout_width="match_parent"
-        android:layout_height="128dp"
-
         android:gravity="center"
-        android:text="13:37"
-        android:textSize="60sp"
-        android:layout_below="@+id/imageView4"
+        android:padding="8dp"
+        android:textSize="18sp"
+        android:id="@+id/stepNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Шаг 1 из 7"/>
+    <RelativeLayout
+        android:id="@+id/timerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <com.scalified.fab.ActionButton
-        android:id="@+id/action_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        fab:image="@android:drawable/ic_media_play"
-        fab:button_color="#f00"
-        android:layout_below="@+id/timer"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+
+            android:gravity="center"
+            android:text="13:37"
+            android:textSize="60sp"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/clearButton"
+            android:layout_toLeftOf="@+id/clearButton" />
+        <com.scalified.fab.ActionButton
+            android:id="@+id/action_button"
+            android:layout_width="64dp"
+            android:layout_height="88dp"
+            android:layout_margin="4dp"
+            fab:image="@android:drawable/ic_media_play"
+            fab:button_color="#f55"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <com.scalified.fab.ActionButton
+            android:layout_margin="4dp"
+            android:id="@+id/clearButton"
+            android:layout_width="64dp"
+            android:layout_height="88dp"
+            fab:image="@android:drawable/ic_menu_rotate"
+            fab:button_color="#f55"
+            android:layout_toLeftOf="@id/action_button" />
+    </RelativeLayout>
+
+
     <TextView
+        android:padding="8dp"
         android:textSize="18sp"
         android:id="@+id/descText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Поставьте ведро воды с хуем туды над горящей охапкой. При необходимости запустите таймер, который автоматически оповестит о готовности"
-        android:layout_below="@+id/action_button"
+        android:layout_below="@+id/timerLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <ImageView
         android:scaleType="centerCrop"
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="128dp"
-        android:layout_alignParentTop="true"
         app:srcCompat="@drawable/example_food"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/stepNumber"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
