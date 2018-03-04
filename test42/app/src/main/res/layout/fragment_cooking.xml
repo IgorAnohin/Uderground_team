@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ru.underground.test42.CookingActivity">
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+
+        android:gravity="center"
+        android:text="13:37"
+        android:textSize="60sp"
+        android:layout_below="@+id/imageView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        fab:image="@android:drawable/ic_media_play"
+        fab:button_color="#f00"
+        android:layout_below="@+id/timer"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:textSize="18sp"
+        android:id="@+id/descText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Поставьте ведро воды с хуем туды над горящей охапкой. При необходимости запустите таймер, который автоматически оповестит о готовности"
+        android:layout_below="@+id/action_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/example_food"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

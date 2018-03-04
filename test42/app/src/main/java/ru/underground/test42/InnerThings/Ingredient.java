@@ -14,7 +14,7 @@ public class Ingredient implements Searchable{
     private String m_pictureUrl;
     private float m_price; // цена за 1 у. е.
     private int m_unitType;
-    private boolean m_isUnLikeable = false;
+    public boolean isUnLikeable = false;
 
     private float m_protein;
     private float m_fats;
@@ -51,21 +51,8 @@ public class Ingredient implements Searchable{
         return m_price;
     }
 
-    public String getUnitType() {
-        switch (m_unitType){
-            case 0:
-                return "мл";
-            case 1:
-                return "л";
-            case 2:
-                return "г";
-            case 3:
-                return "кг";
-            case 4:
-                return "шт";
-            default:
-                return "ед";
-        }
+    public int getUnitType() {
+        return m_unitType;
     }
 
     public float getProtein() {
@@ -87,15 +74,5 @@ public class Ingredient implements Searchable{
     @Override
     public String searchStr() {
         return getName();
-    }
-
-    public boolean isUnLikeable()
-    {
-        return m_isUnLikeable;
-    }
-
-    public void setUnLikeable(boolean unLikeabke)
-    {
-        m_isUnLikeable = unLikeabke;
     }
 }

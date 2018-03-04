@@ -241,6 +241,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_start"/>
+            <Button
+                android:textColor="#fff"
+                android:id="@+id/calendarButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_start"/>
         </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 

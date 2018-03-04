@@ -80,6 +80,7 @@ public class ToolManager {
 
     public static void load (JsonArray jArray)
     {
+        m_tools = new HashMap();
         for(int i = 0;i<jArray.size();i++)
         {
             try{

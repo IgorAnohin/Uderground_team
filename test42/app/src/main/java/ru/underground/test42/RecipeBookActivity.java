@@ -41,7 +41,6 @@ public class RecipeBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_book_activity);
         // View mainLayout=findViewById(R.id.mainLayout);
-        MainSystem.Initialize();
 
         RecipeList recipeList = new RecipeList();
         recipeList.createTest();

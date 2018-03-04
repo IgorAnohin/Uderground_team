@@ -14,11 +14,15 @@ public class RecipeList {
         m_recipes = new ArrayList();
     }
 
+    public void add_recipe(Recipe recipe) {
+        m_recipes.add(recipe);
+    }
+
 
     public void createTest()
     {
         Recipe recipe1 = new Recipe();
-        recipe1.Initialize("плов-хуев","Знаменитое блюдо, прещедшее, по слухам, из Грузии. Быстро в готовке, " +
+        recipe1.Initialize(0,"плов-хуев","Знаменитое блюдо, прещедшее, по слухам, из Грузии. Быстро в готовке, " +
                 "питаттельно. Сложность приготовления сможет отпугнуть неподготовленных, но в итоге останутся только избранные.",
                 "http://vkusnatisha.ru/wp-content/uploads/2017/04/7fb0ba22ade79be35017e8a0f07fb089.jpg",6);
         ArrayList<Integer> ingrIDs1 = new ArrayList(Arrays.asList(new Integer[]{0,1,2,3,4,5,6}));
@@ -31,7 +35,7 @@ public class RecipeList {
                 "&http://novosib-room.ru/uploads/novosib/2015/02/7372091_original.jpg|10|-1|0|як");
 
         Recipe recipe2 = new Recipe();
-        recipe2.Initialize("суп из семи залуп aaaaaaaa aaaaaaaaa AAAAAAAAAAA","типа супчик",
+        recipe2.Initialize(1,"суп из семи залуп aaaaaaaa aaaaaaaaa AAAAAAAAAAA","типа супчик",
                 "http://vkusnatisha.ru/wp-content/uploads/2017/04/7fb0ba22ade79be35017e8a0f07fb089.jpg",9);
         ArrayList<Integer> ingrIDs2 = new ArrayList(Arrays.asList(new Integer[]{7,8}));
         ArrayList<Integer> ingrSizes2 = new ArrayList(Arrays.asList(new Integer[]{7,6}));

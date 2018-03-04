@@ -1,4 +1,4 @@
-package ru.underground.test42;
+package ru.underground.test42.Lists;
 
 
 
@@ -24,28 +24,28 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import ru.underground.test42.InnerThings.Ingredient;
 import ru.underground.test42.Lists.RecipesAdapter;
+import ru.underground.test42.R;
 
-class IngredientAdapter extends ArrayAdapter<Ingredient> {
+public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     private final Activity context;
-    ArrayList<Boolean> selectedList;
     SharedPreferences preferences;
 
     public IngredientAdapter(Activity context, ArrayList<Ingredient> list) {
         super(context, R.layout.list_item_recipe_ingridient, list);
         this.context = context;
-        selectedList = new ArrayList<Boolean>();
         preferences= PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public HashSet<String> getDislikes() {
         HashSet<String> dis=new HashSet<>();
         for (int i=0;i<getCount();i++){
-            if(selectedList.get(i)){
+            if(getItem(i).isUnLikeable){
                 dis.add(getItem(i).getName());
             }
         }
@@ -80,7 +80,9 @@ class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
         holder.checkBox.setVisibility(View.VISIBLE);
 
-        if (selectedList.get(position)) {
+        final Ingredient ingredient=getItem(position);
+
+        if (ingredient.isUnLikeable) {
             holder.checkBox.setChecked(true);
         } else {
             holder.checkBox.setChecked(false);
@@ -89,11 +91,10 @@ class IngredientAdapter extends ArrayAdapter<Ingredient> {
         holder.foreground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedList.set(position,!selectedList.get(position));
+                ingredient.isUnLikeable=!ingredient.isUnLikeable;
                 Log.d("aaa","a"+ Arrays.toString(getDislikes().toArray()));
                 preferences.edit().putStringSet("dislikes",getDislikes()).apply();
-                Log.d("click", String.valueOf(selectedList.get(position)));
-                if (selectedList.get(position)) {
+                if (ingredient.isUnLikeable) {
                     holder.checkBox.setChecked(true);
                 } else {
                     holder.checkBox.setChecked(false);
@@ -103,10 +104,5 @@ class IngredientAdapter extends ArrayAdapter<Ingredient> {
         });
 
         return rowView;
-    }
-
-    public void add(@Nullable Ingredient object, boolean sel) {
-        selectedList.add(sel);
-        super.add(object);
     }
 }

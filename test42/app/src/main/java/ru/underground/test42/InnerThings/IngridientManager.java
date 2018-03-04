@@ -98,7 +98,7 @@ public class IngridientManager {
                 jIngr.addProperty("protein", ingr.getProtein());
                 jIngr.addProperty("fats", ingr.getFats());
                 jIngr.addProperty("carbonyd", ingr.getCarbonyd());
-                jIngr.addProperty("isUnLikeable", ingr.isUnLikeable());
+                jIngr.addProperty("isUnLikeable", ingr.isUnLikeable);
                 jArray.add(jIngr);
             }
             catch (Exception e)
@@ -111,6 +111,7 @@ public class IngridientManager {
 
     public static void load (JsonArray jArray)
     {
+        m_ingredients = new HashMap<>();
         for(int i = 0;i<jArray.size();i++)
         {
             try{
@@ -124,7 +125,7 @@ public class IngridientManager {
                 float fats = (float)jIngr.get("fats").getAsFloat();
                 float carbonyd = (float)jIngr.get("carbonyd").getAsFloat();
                 addIngredient(id,name,url,price,unitType,protein,fats,carbonyd);
-                m_ingredients.get(id).setUnLikeable(jIngr.get("isUnLikeable").getAsBoolean());
+                m_ingredients.get(id).isUnLikeable=(jIngr.get("isUnLikeable").getAsBoolean());
             }
             catch (Exception e) {
             }

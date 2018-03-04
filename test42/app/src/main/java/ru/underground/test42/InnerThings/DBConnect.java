@@ -24,7 +24,7 @@ public class DBConnect {
                         throw new IllegalStateException("Cannot find the driver in the classpath!", e);
                 }
 
-                String url = "jdbc:mysql://178.162.38.113:3306/test42";
+                String url = "jdbc:mysql://10.20.3.110:3306/test42";
                 String username = "stranger";
                 String password = "12345";
 
@@ -61,4 +61,5 @@ public class DBConnect {
                 }
                 return null;
         }
+
 }

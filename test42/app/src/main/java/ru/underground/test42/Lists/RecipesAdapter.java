@@ -21,9 +21,11 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import java.util.ArrayList;
 
 import ru.underground.test42.CookingActivity;
+import ru.underground.test42.IgorFiles.Calendar;
 import ru.underground.test42.InnerThings.Demands;
 import ru.underground.test42.InnerThings.Recipe;
 import ru.underground.test42.InnerThings.Tool;
+import ru.underground.test42.MainActivity;
 import ru.underground.test42.R;
 
 
@@ -53,6 +55,7 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
         LinearLayout toolsList;
 
         Button startButton;
+        Button calendarButton;
 
     }
 
@@ -104,7 +107,7 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
         LayoutInflater inflater = context.getLayoutInflater();
         final View rowView = inflater.inflate(R.layout.list_item_reciepe, null, true);
 
-        Recipe recipe=getItem(position);
+        final Recipe recipe=getItem(position);
         final String title = recipe.getName();
 
         final ViewHolder holder = new ViewHolder();
@@ -115,13 +118,21 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
         holder.mainView = (CardView) rowView.findViewById(R.id.mainLayout);
         holder.layout = (ExpandableLinearLayout) rowView.findViewById(R.id.expandableLayout);
         holder.startButton=(Button)rowView.findViewById(R.id.startButton);
+        holder.calendarButton=(Button)rowView.findViewById(R.id.calendarButton);
         holder.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.staticRecipe=recipe;
                 context.startActivity(new Intent(context, CookingActivity.class));
             }
         });
-
+        holder.calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.staticRecipe=recipe;
+                context.startActivity(new Intent(context, Calendar.class));
+            }
+        });
         holder.listView=(LinearLayout)rowView.findViewById(R.id.ingrList);
         holder.toolsList=(LinearLayout)rowView.findViewById(R.id.toolsList);
 
