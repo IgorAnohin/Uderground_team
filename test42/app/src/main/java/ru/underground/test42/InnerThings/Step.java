@@ -1,5 +1,9 @@
 package ru.underground.test42.InnerThings;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.net.URL;
 import java.util.ArrayList;
 
 public class Step {
@@ -15,6 +19,8 @@ public class Step {
     private String m_desc;
 
     private boolean m_done;
+    public Bitmap loadedDrawable;
+
 
     public boolean Initialize(String url, int time,ArrayList<Integer>  lastSteps, int type, String desc) {
         //Проверка url картинки
@@ -28,7 +34,18 @@ public class Step {
         m_type = type;
         m_desc = desc;
         m_done = false;
-
+        Thread t = new Thread()  {
+            @Override
+            public void run() {
+                try {
+                    final Bitmap bitmap = BitmapFactory.decodeStream(new URL(getUrl()).openStream());
+                    loadedDrawable=bitmap;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
         return true;
     }
 

@@ -31,6 +31,8 @@ public class History {
         m_history.add(0,historyUnit);
         if(m_history.size()>5)
             m_history.remove(5);
+        float test = MainSystem.getDayKal();
+        test +=0;
     }
 
     public static ArrayList<HistoryUnit> getHistory()

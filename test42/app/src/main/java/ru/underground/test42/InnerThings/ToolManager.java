@@ -10,13 +10,7 @@ import java.util.Map;
 public class ToolManager {
     private static Map<Integer, Tool> m_tools;
 
-    private static void createTest() {
-        for(int i = 0;i<9;i++)
-        {
-            addTool(0,"Плита", "http://4dealer.ru/art_images/20/ae/a03175f9aa9d80299a6d0155af76437a.jpg");
-            addTool(1,"Нож", "http://victorinoxtrade.ru/assets/images/products/15745/120x90/nozh-victorinox-razdelochnyy-oranzhevyy-6800619l9b0.jpg");
-        }
-    }
+
 
     public static void Initialize()
     {
@@ -32,8 +26,6 @@ public class ToolManager {
         } catch (Exception e) {
             //throw new RuntimeException("Something wrong with results.");
         }
-
-        createTest();
     }
 
     public static Tool getTool(int id)

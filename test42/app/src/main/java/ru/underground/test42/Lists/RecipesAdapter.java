@@ -2,6 +2,8 @@ package ru.underground.test42.Lists;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -18,8 +20,10 @@ import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
+import java.net.URL;
 import java.util.ArrayList;
 
+import ru.underground.test42.CheckIngrsActivity;
 import ru.underground.test42.CookingActivity;
 import ru.underground.test42.IgorFiles.Calendar;
 import ru.underground.test42.InnerThings.Demands;
@@ -79,7 +83,11 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
 
             holder.ingredientTitle.setText(ingredient.ingredient.getName());
             holder.ingredientCount.setText(ingredient.size+" "+ingredient.ingredient.getUnitType());
-
+            if(ingredient.ingredient.loadedDrawable==null){
+                holder.ingredientDrawable.setImageResource(android.R.drawable.ic_dialog_alert);
+            }else {
+                holder.ingredientDrawable.setImageBitmap(ingredient.ingredient.loadedDrawable);
+            }
             return rowView;
         }
 
@@ -97,7 +105,11 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
 
         holder.ingredientTitle.setText(tool.getName());
         holder.ingredientCount.setText("");
-
+        if(tool.loadedDrawable==null){
+            holder.ingredientDrawable.setImageResource(android.R.drawable.ic_dialog_alert);
+        }else {
+            holder.ingredientDrawable.setImageBitmap(tool.loadedDrawable);
+        }
         return rowView;
     }
 
@@ -123,7 +135,7 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
             @Override
             public void onClick(View v) {
                 MainActivity.staticRecipe=recipe;
-                context.startActivity(new Intent(context, CookingActivity.class));
+                context.startActivity(new Intent(context, CheckIngrsActivity.class));
             }
         });
         holder.calendarButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +156,7 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
         holder.proteinCount.setText(String.valueOf(recipe.getDemands().getProtein()));
         holder.fatsCount.setText(String.valueOf(recipe.getDemands().getFats()));
         holder.carbonsCount.setText(String.valueOf(recipe.getDemands().getCarbonyd()));
-        holder.caloriesCount.setText("Где!?");
+        holder.caloriesCount.setText(String.valueOf(recipe.getKal()));
 
         rowView.setTag(holder);
 
@@ -231,6 +243,11 @@ public class RecipesAdapter extends ArrayAdapter<Recipe> {
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         holder.shortDescriptionText.setText(text);
+        if(recipe.loadedDrawable==null){
+            holder.recipeDrawable.setImageResource(android.R.drawable.ic_dialog_alert);
+        }else {
+            holder.recipeDrawable.setImageBitmap(recipe.loadedDrawable);
+        }
         //  holder.sizeBar=(ImageView) rowView.findViewById(R.id.sizeBar); jk
         return rowView;
     }

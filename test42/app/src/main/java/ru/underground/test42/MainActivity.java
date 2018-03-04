@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,25 +23,31 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import ru.underground.test42.InnerThings.Demands;
+import ru.underground.test42.InnerThings.Future_history;
 import ru.underground.test42.InnerThings.History;
 import ru.underground.test42.InnerThings.Ingredient;
 import ru.underground.test42.InnerThings.IngridientManager;
 import ru.underground.test42.InnerThings.MainSystem;
 import ru.underground.test42.InnerThings.Recipe;
+import ru.underground.test42.InnerThings.RecipeList;
 import ru.underground.test42.InnerThings.Searchable;
+import ru.underground.test42.InnerThings.Searcher;
 import ru.underground.test42.Lists.IngredientAdapter;
 import ru.underground.test42.Lists.RecipesAdapter;
 
+import static ru.underground.test42.R.id.drawer;
 import static ru.underground.test42.R.id.recipeList;
 
 public class MainActivity extends AppCompatActivity  implements SensorEventListener {
 
     ListView listView;
     AdapterView.OnItemClickListener listener;
-    Activity activity=this;
+    public static Activity activity;;
     SharedPreferences preferences;
     static ArrayList<String> dis;
     ListView mainList;
@@ -59,12 +66,14 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     private TextView count;
     private TextView kalor;
     boolean activityRunning;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Инициализация системы
 
         super.onCreate(savedInstanceState);
+        activity = this;
         MainSystem.Initialize(this);
 
         ingredientAdapter = new IngredientAdapter(activity,new ArrayList<Ingredient>());
@@ -79,6 +88,31 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         book=(Button)findViewById(R.id.button2);
         podbor=(Button)findViewById(R.id.button3);
 
+
+        searchButton=(Button)findViewById(R.id.searchButton);
+        searchButton.setVisibility(View.GONE);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchButton.setVisibility(View.GONE);
+                ingredientAdapter.type = true;
+                mainList.setAdapter(recipesAdapter);
+                ArrayList<Ingredient> ingredients = new ArrayList<>();
+                for(int i = 0;i<IngridientManager.getAllIngredients().length; i++)
+                {
+                    if(IngridientManager.getAllIngredients()[i].isChecked)
+                        ingredients.add(IngridientManager.getAllIngredients()[i]);
+                    IngridientManager.getAllIngredients()[i].isChecked = false;
+
+                }
+                ArrayList<Recipe> recipes = Searcher.search(ingredients);
+                recipesAdapter.clear();
+                recipesAdapter.addAll(recipes);
+                recipesAdapter.notifyDataSetChanged();
+            }
+        });
+
+
         count = (TextView) findViewById(R.id.count);
         kalor = (TextView) findViewById(R.id.eater);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -86,7 +120,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                searchButton.setVisibility(View.GONE);
                 homeView.setVisibility(View.GONE);
                 recipeView.setVisibility(View.VISIBLE);
                 mainList.setAdapter(recipesAdapter);
@@ -99,10 +133,13 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         podbor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //((Button)findViewById(R.id.button)).setVisibility(View.VISIBLE);
+                searchButton.setVisibility(View.VISIBLE);
                 setTitle("Подбор по ингридиентам");
                 homeView.setVisibility(View.GONE);
                 recipeView.setVisibility(View.VISIBLE);
                 mainList.setAdapter(ingredientAdapter);
+                ingredientAdapter.type = false;
                 ingredientAdapter.clear();
                 ingredientAdapter.addAll(IngridientManager.getAllIngredients());
                 ingredientAdapter.notifyDataSetChanged();
@@ -111,12 +148,13 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         final LinearLayout frameView=(LinearLayout)findViewById(R.id.frameView);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1);
         listView.setAdapter(adapter);
-        adapter.addAll("Главная","Профиль","История","Любимые блюда","Нелюбимые ингридиенты");
+        adapter.addAll("Главная","История","Планы","Нелюбимые ингридиенты");
         adapter.notifyDataSetChanged();
         listener= new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(oldPos==4){
+                ((DrawerLayout)findViewById(R.id.drawer)).closeDrawers();
+                if(oldPos==3){
                     preferences.edit().putStringSet("dislikes",ingredientAdapter.getDislikes()).apply();
                     Toast.makeText(getApplicationContext(),"Сохранено!",Toast.LENGTH_SHORT).show();
                 }
@@ -129,7 +167,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                     homeView.setVisibility(View.GONE);
                     recipeView.setVisibility(View.VISIBLE);
                 }
-                if(position==2) {
+                if(position==1) {
                     setTitle("История");
                     Toast.makeText(getApplicationContext(), "Здесь отображаются ваши недавние блюда", Toast.LENGTH_LONG).show();
                     mainList.setAdapter(recipesAdapter);
@@ -139,9 +177,17 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                         recipesAdapter.add(MainSystem.getRecipeList().find(unit.recipeID));
                     }
                     recipesAdapter.notifyDataSetChanged();
-                }else if(position==3){
-
-                }else if (position==4) {
+                }else if(position==2){
+                    setTitle("Планы");
+                    Toast.makeText(getApplicationContext(), "Здесь отображаются ваши запланированные блюда", Toast.LENGTH_LONG).show();
+                    mainList.setAdapter(recipesAdapter);
+                    recipesAdapter.clear();
+                    ArrayList<Future_history.HistoryUnit> historyUnits=Future_history.getHistory();
+                    for (Future_history.HistoryUnit unit: historyUnits){
+                        recipesAdapter.add(MainSystem.getRecipeList().find(unit.recipeID));
+                    }
+                    recipesAdapter.notifyDataSetChanged();
+                }else if (position==3) {
                     setTitle("Нелюбимые ингредиенты");
                     Toast.makeText(getApplicationContext(), "Выберите нелюбимые ингредиенты, чтобы исключить блюда с ними из поиска", Toast.LENGTH_LONG).show();
                     dis = new ArrayList<>();
@@ -170,12 +216,12 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                     ingredientAdapter.add((Ingredient)newList1.get(i));
                 }
                 ingredientAdapter.notifyDataSetChanged();
-                ingredientAdapter.clear();
-                for(int i = 0;i<newList1.size();i++)
+                recipesAdapter.clear();
+                for(int i = 0;i<newList2.size();i++)
                 {
-                    ingredientAdapter.add((Ingredient)newList1.get(i));
+                    recipesAdapter.add((Recipe) newList2.get(i));
                 }
-                ingredientAdapter.notifyDataSetChanged();
+                recipesAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -213,7 +259,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
             Toast.makeText(this, "Count sensor not available!",
                     Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
@@ -237,8 +282,17 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         }
 
     }
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        setTitle("Домашняя страница");
+        homeView.setVisibility(View.VISIBLE);
+        recipeView.setVisibility(View.GONE);
+
     }
 }

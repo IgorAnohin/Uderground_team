@@ -1,5 +1,9 @@
 package ru.underground.test42.InnerThings;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +24,9 @@ public class Recipe implements Searchable{
     private ArrayList<String> m_tags;
 
     private int m_currentStep = -1;
+    public Bitmap loadedDrawable;
+
+
 
     public boolean Initialize(String jsonStr)
     {
@@ -29,11 +36,18 @@ public class Recipe implements Searchable{
     public boolean Initialize(int id, String name, String desc, String url,int difficult)
     {
         //Проверка url картинки
-        if (URLChecker.checkURL(url) && URLChecker.checkForPicture(url))
-            m_pictureUrl = url;
-        else
-            return false;
-
+        Thread t = new Thread()  {
+            @Override
+            public void run() {
+                try {
+                    final Bitmap bitmap = BitmapFactory.decodeStream(new URL(getUrl()).openStream());
+                    loadedDrawable=bitmap;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
         m_id = id;
         m_name = name;
         m_desc = desc;
@@ -258,7 +272,18 @@ public class Recipe implements Searchable{
 
             parseStepsString(jObj.get("steps").getAsString());
             m_tags = new ArrayList(Arrays.asList(jObj.get("tags").getAsString().split(",")));
-
+            Thread t = new Thread()  {
+                @Override
+                public void run() {
+                    try {
+                        final Bitmap bitmap = BitmapFactory.decodeStream(new URL(getUrl()).openStream());
+                        loadedDrawable=bitmap;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            t.start();
             //загрузка ингредиентов
             ArrayList<Integer> ingrIDs = new ArrayList<>();
             ArrayList<Integer> ingrSizes = new ArrayList<>();

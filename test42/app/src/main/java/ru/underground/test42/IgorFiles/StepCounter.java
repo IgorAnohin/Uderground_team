@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import ru.underground.test42.InnerThings.History;
 import ru.underground.test42.InnerThings.MainSystem;
 import ru.underground.test42.R;
@@ -20,6 +22,7 @@ public class StepCounter extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private TextView count;
     private TextView kalor;
+    private TextView razn;
     boolean activityRunning;
 
     @Override
@@ -62,6 +65,8 @@ public class StepCounter extends Activity implements SensorEventListener {
         if (activityRunning) {
             count.setText(String.valueOf(event.values[0]));
             kalor.setText((int) MainSystem.getDayKal());
+            if (MainSystem.getDayKal() > event.values[0] * 0.25)
+                razn.setText("Уделите внимание вашей активности");
         }
 
     }

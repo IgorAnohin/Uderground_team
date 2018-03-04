@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:fitsSystemWindows="true">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_centerHorizontal="true"
-            android:padding="20dp"
+            android:padding="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -31,14 +32,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Step count since reboot:"
+                android:text="Количество шагов"
                 android:textColor="@android:color/holo_blue_dark"
-                android:textSize="30dp" />
+                android:textSize="32dp" />
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Step count since reboot"
+                    android:text="Не забывайте о здоровье"
+                    android:textSize="15dp"
                     android:textColor="@android:color/holo_blue_dark" />
 
             <TextView
@@ -46,63 +48,65 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="30dp" />
+                    android:textSize="32dp" />
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "Колорий сегодня потереблено"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="@android:color/holo_blue_dark"
                 android:textSize="25dp" />
             <TextView
                 android:layout_marginTop="5dp"
                 android:id="@+id/eater"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "0"
-                android:textColor="@android:color/holo_green_dark"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="30dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/sravn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="30dp" />
         </LinearLayout>
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+
 
             <Button
+                android:textColor="#fff"
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_above="@+id/button3"
                 android:layout_weight="1"
                 android:text="Книга рецептов" />
 
             <Button
+                android:textColor="#fff"
                 android:layout_weight="1"
                 android:id="@+id/button3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/button2"
+                android:layout_alignParentBottom="true"
                 android:text="Подбор по ингредиентам" />
-        </LinearLayout>
+
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
         android:visibility="gone"
         android:id="@+id/recipeBookView"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,9 +136,15 @@
             android:id="@+id/recipeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-
     </LinearLayout>
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Подобрать!" />
+    </RelativeLayout>
 </LinearLayout>
     <ListView
         android:id="@+id/menuList"

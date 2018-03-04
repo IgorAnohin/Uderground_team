@@ -9,14 +9,13 @@ import java.util.ArrayList;
 
 public class Future_history {
 
-        static protected class HistoryUnit
+        static public class HistoryUnit
         {
             public Timestamp time;
             public int recipeID;
         }
 
-        static private ArrayList<HistoryUnit> m_future_history;
-
+        static private ArrayList<HistoryUnit> m_future_history = new ArrayList<>();
 
         public static void Initialize(){
             m_future_history = new ArrayList<>();

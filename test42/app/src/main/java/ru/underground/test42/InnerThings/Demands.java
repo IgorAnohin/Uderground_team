@@ -49,6 +49,15 @@ public class Demands {
         return m_ingredients;
     }
 
+    public ArrayList<Ingredient> getOnlyIngredients(){
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for(int i = 0;i<m_ingredients.size();i++)
+        {
+            ingredients.add(m_ingredients.get(i).ingredient);
+        }
+        return ingredients;
+    }
+
     public ArrayList<Tool> getTools(){
         return m_tools;
     }

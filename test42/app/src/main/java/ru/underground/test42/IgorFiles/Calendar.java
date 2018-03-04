@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +37,7 @@ public class Calendar extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Future_history.addRecipe(MainActivity.staticRecipe.getId(), date);
-                finish();
+               finish();
             }
         });
 

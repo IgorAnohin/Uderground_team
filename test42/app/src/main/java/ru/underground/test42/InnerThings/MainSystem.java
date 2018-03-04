@@ -43,6 +43,7 @@ public class MainSystem {
 
         loadAssets();
         History.Initialize();
+        Future_history.Initialize();
 //      DBConnect.init();
         //m_recipes = new RecipeList();
         //IngridientManager.Initialize();
@@ -147,8 +148,7 @@ public class MainSystem {
         for(int i = 0;i<m_historyUnit.size();i++)
         {
             Timestamp today = new Timestamp(System.currentTimeMillis());
-            if(m_historyUnit.get(i).time.getDay() == today.getDay())
-                kal+=m_recipes.find(m_historyUnit.get(i).recipeID).getKal();
+            kal+=m_recipes.find(m_historyUnit.get(i).recipeID).getKal();
         }
         return kal;
     }

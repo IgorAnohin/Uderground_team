@@ -5,6 +5,8 @@ package ru.underground.test42.Lists;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,8 +37,10 @@ import ru.underground.test42.Lists.RecipesAdapter;
 import ru.underground.test42.R;
 
 public class IngredientAdapter extends ArrayAdapter<Ingredient> {
+    IngredientAdapter adapter = this;
     private final Activity context;
     SharedPreferences preferences;
+    public boolean type = true;
 
     public IngredientAdapter(Activity context, ArrayList<Ingredient> list) {
         super(context, R.layout.list_item_recipe_ingridient, list);
@@ -80,25 +86,56 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
         final Ingredient ingredient=getItem(position);
 
-        if (ingredient.isUnLikeable) {
-            holder.checkBox.setChecked(true);
-        } else {
-            holder.checkBox.setChecked(false);
+        if(type)
+        {
+            if (ingredient.isUnLikeable) {
+                holder.checkBox.setChecked(true);
+            } else {
+                holder.checkBox.setChecked(false);
+            }
         }
+        else
+            holder.checkBox.setChecked(false);
 
         holder.foreground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredient.isUnLikeable=!ingredient.isUnLikeable;
-                if (ingredient.isUnLikeable) {
-                    holder.checkBox.setChecked(true);
-                } else {
-                    holder.checkBox.setChecked(false);
+                if(type)
+                {
+                    ingredient.isUnLikeable=!ingredient.isUnLikeable;
+                    if (ingredient.isUnLikeable) {
+                        holder.checkBox.setChecked(true);
+                    } else {
+                        holder.checkBox.setChecked(false);
+                    }
                 }
-
+                else
+                {
+                    ingredient.isChecked=!ingredient.isChecked;
+                    if (ingredient.isChecked) {
+                        holder.checkBox.setChecked(true);
+                    } else {
+                        holder.checkBox.setChecked(false);
+                    }
+                }
+                boolean b = true;
+                for(int i = 0;i<adapter.getCount();i++)
+                {
+                    if(!adapter.getItem(i).isChecked)
+                        b = false;
+                }
+                if(b)
+                {
+                    ((Button)context.findViewById(R.id.checkIngrsButton)).setVisibility(View.VISIBLE);
+                }
             }
         });
-
+        if(ingredient.loadedDrawable==null){
+            holder.ingredientDrawable.setImageResource(android.R.drawable.ic_dialog_alert);
+        }else {
+            holder.ingredientDrawable.setImageBitmap(ingredient.loadedDrawable);
+        }
+        //  holder.sizeBa
         return rowView;
     }
 }

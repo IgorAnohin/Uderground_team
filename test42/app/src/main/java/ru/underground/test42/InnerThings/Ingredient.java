@@ -1,5 +1,10 @@
 package ru.underground.test42.InnerThings;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.net.URL;
+
 public class Ingredient implements Searchable{
 
     //типо enum
@@ -15,10 +20,12 @@ public class Ingredient implements Searchable{
     private float m_price; // цена за 1 у. е.
     private int m_unitType;
     public boolean isUnLikeable = false;
+    public boolean isChecked = false;
 
     private float m_protein;
     private float m_fats;
     private float m_carbonyd;
+    public Bitmap loadedDrawable;
 
     public boolean Initialize(int id, String name, String url, float price, int unitType, float protein, float fats, float carbonyd)
     {
@@ -35,7 +42,18 @@ public class Ingredient implements Searchable{
         m_protein = protein;
         m_fats = fats;
         m_carbonyd = carbonyd;
-
+        Thread t = new Thread()  {
+            @Override
+            public void run() {
+                try {
+                    final Bitmap bitmap = BitmapFactory.decodeStream(new URL(getUrl()).openStream());
+                    loadedDrawable=bitmap;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            };
+        };
+        t.start();
         return true;
     }
 
@@ -74,5 +92,24 @@ public class Ingredient implements Searchable{
     @Override
     public String searchStr() {
         return getName();
+    }
+
+    public String parseUnitType(int type)
+    {
+        switch (type)
+        {
+            case(0):
+                return "мл";
+            case(1):
+                return "л";
+            case(2):
+                return "г";
+            case(3):
+                return "кг";
+            case(4):
+                return "шт";
+            default:
+                return "";
+        }
     }
 }

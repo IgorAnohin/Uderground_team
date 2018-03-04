@@ -10,30 +10,7 @@ import java.util.Map;
 public class IngridientManager {
     private static Map<Integer, Ingredient> m_ingredients;
 
-    private static void createTest()
-    {
-        for(int i = 0;i<9;i++)
-        {
-            addIngredient(0,"Укроп", "https://domoidostavim.ru/images/static/products/3dd6925c-e756-409d-bb43-756ac637c0b5.jpg",
-                    30, 2,100,20,10);
-            addIngredient(1,"Кошачья жопа", "http://kotomatrix.ru/images/lolz/2009/01/27/Rz.jpg",
-                    5430, 4,100,2000,170);
-            addIngredient(2,"Картошина", "http://novosib-room.ru/uploads/novosib/2015/02/7372091_original.jpg",
-                    20, 4,1030,30,40);
-            addIngredient(3,"Мандавошина", "https://static.baza.farpost.ru/v/1500266049017_hugeBlock",
-                    3000, 4,200,60,130);
-            addIngredient(4,"Вода", "http://kangenwaterbantul.com/wp-content/uploads/2013/11/Front-image_drinking-water.jpg",
-                    60, 1,100,20,10);
-            addIngredient(5,"Хуй туды", "https://static.baza.farpost.ru/v/1500266049017_hugeBlock",
-                    15, 4,200,10,40);
-            addIngredient(6,"Охапка дров", "https://domoidostavim.ru/images/static/products/3dd6925c-e756-409d-bb43-756ac637c0b5.jpg",
-                    300, 3,180,20,10);
-            addIngredient(7,"Залупа", "https://upload.wikimedia.org/wikipedia/commons/c/c7/Jms_003.JPG",
-                    80, 2,100,20,10);
-            addIngredient(8,"Порошенко", "http://vestikavkaza.ru/upload/nvk/2015_Jul/Poroshenko-vstretitsya-s-glavoy-Evroparlamenta.jpg",
-                    30000, 2,100,20,10);
-        }
-    }
+
 
     public static void Initialize()
     {
@@ -55,7 +32,6 @@ public class IngridientManager {
             //throw new RuntimeException("Something wrong with results.");
         }
 
-        createTest();
     }
 
     public static Ingredient getIngredient(int id)

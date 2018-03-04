@@ -136,8 +136,14 @@ public class TabFragment extends Fragment {
         }
         TextView descText=(TextView)rootView.findViewById(R.id.descText);
         TextView stepText=(TextView)rootView.findViewById(R.id.stepNumber);
+        ImageView stepImage=(ImageView)rootView.findViewById(R.id.imageView);
         stepText.setText("Шаг "+number+" из "+count);
         descText.setText(step.getDesc());
+        if(step.loadedDrawable==null){
+            stepImage.setImageResource(android.R.drawable.ic_dialog_alert);
+        }else {
+            stepImage.setImageBitmap(step.loadedDrawable);
+        }
         return rootView;
     }
 
